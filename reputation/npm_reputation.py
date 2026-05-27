@@ -104,11 +104,11 @@ def lookup(node: dict, *, timeout: int = 10) -> dict | None:
     downloads = _npm_downloads_signal(name, timeout=timeout)
     depsdev = _depsdev_signals(name, timeout=timeout)
 
-    from reputation._typosquat import check as _typosquat_check
+    from ._typosquat import check as _typosquat_check
     typosquat = _typosquat_check(name, "npm")
 
-    from reputation._known_bad import is_known_bad_npm
-    from reputation._ossf_malicious import is_ossf_malicious
+    from ._known_bad import is_known_bad_npm
+    from ._ossf_malicious import is_ossf_malicious
     known_bad_datadog = is_known_bad_npm(name)
     known_bad_ossf = is_ossf_malicious(name, "npm")
     known_bad = known_bad_datadog or known_bad_ossf

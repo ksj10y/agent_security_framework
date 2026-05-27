@@ -42,6 +42,9 @@ import json
 import re
 from pathlib import Path
 
+# Publishers identified as malicious in public audits (cited list in _known_bad).
+from ._known_bad import KNOWN_BAD_SKILL_AUTHORS as KNOWN_BAD_AUTHORS
+
 
 _FRONTMATTER_RE = re.compile(r"^---\s*\n(?P<body>.*?)\n---\s*\n", re.DOTALL)
 
@@ -60,11 +63,6 @@ TRUSTED_AUTHORS = {
     "github", "microsoft",
     "datadog",  # GuardDog publisher
 }
-
-
-# Publishers identified as malicious in public audits. Curated list with
-# cited sources lives in ``reputation._known_bad.KNOWN_BAD_SKILL_AUTHORS``.
-from reputation._known_bad import KNOWN_BAD_SKILL_AUTHORS as KNOWN_BAD_AUTHORS
 
 
 # ─────────────────────────── distribution-source classifier ───────────────────

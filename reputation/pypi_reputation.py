@@ -88,12 +88,12 @@ def lookup(node: dict, *, timeout: int = 10) -> dict | None:
     pypi_meta = _pypi_metadata_signals(name, timeout=timeout)
 
     # 4) Typosquat — local Levenshtein vs popular PyPI top-100
-    from reputation._typosquat import check as _typosquat_check
+    from ._typosquat import check as _typosquat_check
     typosquat = _typosquat_check(name, "PyPI")
 
     # 5) Known-bad package — two independent primary sources.
-    from reputation._known_bad import is_known_bad_pypi
-    from reputation._ossf_malicious import is_ossf_malicious
+    from ._known_bad import is_known_bad_pypi
+    from ._ossf_malicious import is_ossf_malicious
     known_bad_datadog = is_known_bad_pypi(name)
     known_bad_ossf = is_ossf_malicious(name, "pypi")
     known_bad = known_bad_datadog or known_bad_ossf

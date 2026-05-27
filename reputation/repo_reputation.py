@@ -138,7 +138,7 @@ def lookup(node: dict, *, timeout: int = 10) -> dict | None:
     owner, repo = parsed
     name = f"{owner}/{repo}"
 
-    from reputation._known_bad import is_known_bad_github_org
+    from ._known_bad import is_known_bad_github_org
     known_bad_org = is_known_bad_github_org(owner)
 
     scorecard = _query_scorecard(owner, repo, timeout=timeout)
