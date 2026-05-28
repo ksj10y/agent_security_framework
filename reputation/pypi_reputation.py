@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import json
 import urllib.error
+import urllib.parse
 import urllib.request
 
 from . import _osv
@@ -34,7 +35,10 @@ def _http_get_json(url: str, *, timeout: int) -> dict | None:
 
 
 def _depsdev_signals(name: str, *, timeout: int) -> dict:
-    payload = _http_get_json(DEPS_DEV_URL_FMT.format(name=name), timeout=timeout)
+    # deps.dev expects URL-encoded names; PyPI package strings sometimes carry
+    # spaces or dots (e.g. "Roblox.com") that break a bare ``.format`` substitute.
+    encoded = urllib.parse.quote(name, safe="")
+    payload = _http_get_json(DEPS_DEV_URL_FMT.format(name=encoded), timeout=timeout)
     if not payload:
         return {"depsdev_status": "unavailable"}
     versions = payload.get("versions") or []
